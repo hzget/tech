@@ -1,0 +1,17 @@
+[go]: 2022/07/12 18:33:48.542638 hello u
+[go]: 2022/07/12 18:35:21.767318 hello me
+[go]: 2022/07/12 18:35:37.586087 say hello to me[go]: 2022/07/12 18:43:10.016458 1
+[go]: 2022/07/12 18:43:22.295837 1
+[go]: 2022/07/12 18:44:55.173692 say hello to me
+[go]: 2022/07/12 18:46:02.389856 say hello to me
+[go]: 2022/07/12 19:15:17.480382 1
+[go]: 2022/07/12 19:15:34.211424 just a text now
+[go]: 2022/07/12 19:15:39.086014 just a test now
+[go]: 2022/07/12 19:45:07.568405 hehe
+[go]: 2022/07/12 23:13:40.548580 hehe
+[go]: 2022/07/13 00:09:13.147327 heiheihei
+[go]: 2022/07/13 11:20:30.981038 say hello to me
+[go]: 2022/07/13 11:29:34.643006 lunch time
+[go]: 2022/07/13 11:35:12.736121 let's go
+[go]: 2022/07/14 01:21:33.271626 [Portal Service]: renderStudent: {4 Rachel McAdams [{Quiz 1 Quiz 98} {Final Exam Exam 99} {Quiz 2 Quiz 94}]}
+[go]: 2022/07/14 13:10:17.612008 [Portal Service]: renderStudent: {4 Rachel McAdams [{Quiz 1 Quiz 98} {Final Exam Exam 99} {Quiz 2 Quiz 94}]}
