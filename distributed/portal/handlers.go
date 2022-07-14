@@ -1,3 +1,24 @@
+/*
+	It's a distributed system that recording
+	grades of the student.
+
+	structrue:
+	                                                          -----------
+	                          ----------------------------->  |         |
+	                          |                               |   Log   |
+	                          |                      ======>  | Service |
+	                          |                      ||       -----------
+	            -----------   |     ------------     ||
+	            |         | ---     |          | <====
+	User  <---> | Web UI  | <=====> | Registry |
+	App         | Service | ---     | Service  | <====
+	            -----------   |     ------------     ||
+	                          |                      ||       -----------
+	                          |                       =====>  |         |
+	                          |                               | Grading |
+	                          ----------------------------->  | Service |
+	                                                          -----------
+*/
 package portal
 
 import (
