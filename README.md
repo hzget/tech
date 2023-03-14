@@ -12,5 +12,5 @@ notify services of its "required" services online/offline events.
 to develop games.
 
 [distributed]: ./distributed
-[mmo game]: ../mmo/readme.md
+[mmo game]: https://github.com/hzget/mmo
 [Unit Test]: ./testing
