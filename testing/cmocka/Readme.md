@@ -1,16 +1,26 @@
-# Cmocka Quick Start
+Cmocka Quick Start
+==================
 
 The project helps programmers by a quick start example.
 The source files are from [cmocka-1.1.7 examples][cmocka-1.1.7 examples].
 
-This tutorial shows how to write a unit test
+Just install cmocka and then run examples in this project.
+
+Examples
+--------
+
+* check memory issues (mem leak, buffer overflow, etc.)
+* replace subfunction with a mocked one ([uptime](./uptime))
+
+Check Memory Issues
+-------------------
+
+This section shows how to write a unit test
 (concerning memory leak, buffer overflow/underflow),
 how to compile and run the testcases.
 
-Just install cmocka and then run examples in this project.
-
 ```c
-# compile the code and generate executable files (the testcase exe)
+# compile the code and generate executable file (the testcase exe)
 > gcc -o allocate_module_test allocate_module_test.c allocate_module.c -lcmocka -DUNIT_TESTING=1
 
 # run the test case

@@ -39,6 +39,29 @@ The symbol `uptime` will be bound to `__wrap_uptime`.
 
 You can find more details in the manpage: `man ld`
 
+Quick Start
+------------
+
+Generate executable testcase and run the test
+
+    gcc -o test_uptime test_uptime.c -lcmocka -Wl,--wrap=uptime
+    ./test_uptime
+
+    result:
+    [==========] tests: Running 5 test(s).
+    [ RUN      ] test_calc_uptime_minutes
+    [       OK ] test_calc_uptime_minutes
+    [ RUN      ] test_calc_uptime_hour_minute
+    [       OK ] test_calc_uptime_hour_minute
+    [ RUN      ] test_calc_uptime_days_minutes
+    [       OK ] test_calc_uptime_days_minutes
+    [ RUN      ] test_calc_uptime_days_hours_minutes
+    [       OK ] test_calc_uptime_days_hours_minutes
+    [ RUN      ] test_calc_uptime_null
+    [       OK ] test_calc_uptime_null
+    [==========] tests: 5 test(s) run.
+    [  PASSED  ] 5 test(s).
+
 The uptime test
 ---------------
 
@@ -47,10 +70,9 @@ are two ways to understand how things work.
 
 You can find out details about symbol binding using:
 
-    LD_DEBUG=symbols ./example/uptime/uptime
-    LD_DEBUG=symbols ./example/uptime/test_uptime
+    LD_DEBUG=symbols ./uptime
+    LD_DEBUG=symbols ./test_uptime
 
 You can also use a debugger to step through the code!
-
 
 Have fun!
