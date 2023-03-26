@@ -34,12 +34,18 @@ extern void _test_free(void* const ptr, const char* file, const int line);
 #endif // UNIT_TESTING
 
 void leak_memory(void);
+void no_leak_memory(void);
 void buffer_overflow(void);
 void buffer_underflow(void);
 
 void leak_memory(void) {
     int * const temporary = (int*)malloc(sizeof(int));
     *temporary = 0;
+}
+
+void no_leak_memory(void) {
+    int * const temporary = (int*)malloc(sizeof(int));
+    free(temporary);
 }
 
 void buffer_overflow(void) {

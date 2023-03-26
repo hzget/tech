@@ -19,6 +19,7 @@
 #include <cmocka.h>
 
 extern void leak_memory(void);
+extern void no_leak_memory(void);
 extern void buffer_overflow(void);
 extern void buffer_underflow(void);
 
@@ -27,6 +28,13 @@ static void leak_memory_test(void **state) {
     (void) state; /* unused */
 
     leak_memory();
+}
+
+/* Test case that succeeds as no_leak_memory() releases the dynamically allocated block. */
+static void no_leak_memory_test(void **state) {
+    (void) state; /* unused */
+
+    no_leak_memory();
 }
 
 /* Test case that fails as buffer_overflow() corrupts an allocated block. */
@@ -46,6 +54,7 @@ static void buffer_underflow_test(void **state) {
 int main(void) {
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(leak_memory_test),
+        cmocka_unit_test(no_leak_memory_test),
         cmocka_unit_test(buffer_overflow_test),
         cmocka_unit_test(buffer_underflow_test),
     };

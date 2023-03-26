@@ -2,7 +2,7 @@ Cmocka Quick Start
 ==================
 
 The project helps programmers by a quick start example.
-The source files are from [cmocka-1.1.7 examples][cmocka-1.1.7 examples].
+Some source files are modified from [cmocka-1.1.7 examples][cmocka-1.1.7 examples].
 
 Just install cmocka and then run examples in this project.
 
@@ -19,40 +19,69 @@ This section shows how to write a unit test
 (concerning memory leak, buffer overflow/underflow),
 how to compile and run the testcases.
 
-```c
-# compile the code and generate executable file (the testcase exe)
-> gcc -o allocate_module_test allocate_module_test.c allocate_module.c -lcmocka -DUNIT_TESTING=1
+    // our lib to run a unit test
+    // allocate_module.c
 
-# run the test case
-> ./allocate_module_test
-output:
-[==========] tests: Running 3 test(s).
-[ RUN      ] leak_memory_test
-[  ERROR   ] --- Blocks allocated...
-allocate_module.c:41: note: block 0x5645fca1a750 allocated here
-ERROR: leak_memory_test leaked 1 block(s)
+    #ifdef UNIT_TESTING
+    extern void* _test_malloc(const size_t size, const char* file, const int line);
+    extern void _test_free(void* const ptr, const char* file, const int line);
 
-[  FAILED  ] leak_memory_test
-[ RUN      ] buffer_overflow_test
-[  ERROR   ] --- allocate_module.c:48: error: Guard block of 0x5645fca1a7b0 size=4 is corrupt
-allocate_module.c:46: note: allocated here at 0x5645fca1a7b4
-[   LINE   ] --- allocate_module.c:48: error: Failure!
-[  FAILED  ] buffer_overflow_test
-[ RUN      ] buffer_underflow_test
-[  ERROR   ] --- allocate_module.c:54: error: Guard block of 0x5645fca1a990 size=4 is corrupt
-allocate_module.c:52: note: allocated here at 0x5645fca1a98f
-[   LINE   ] --- allocate_module.c:54: error: Failure!
-[  FAILED  ] buffer_underflow_test
-[==========] tests: 3 test(s) run.
-[  PASSED  ] 0 test(s).
-[  FAILED  ] tests: 3 test(s), listed below:
-[  FAILED  ] leak_memory_test
-[  FAILED  ] buffer_overflow_test
-[  FAILED  ] buffer_underflow_test
+    #define malloc(size) _test_malloc(size, __FILE__, __LINE__)
+    #define free(ptr) _test_free(ptr, __FILE__, __LINE__)
+    #endif // UNIT_TESTING
 
- 3 FAILED TEST(S)
-```
+    void leak_memory(void) {
+        int * const temporary = (int*)malloc(sizeof(int));
+        *temporary = 0;
+    }
 
-As we can see, the testcase reports memory leaks, buffer overflow/underflow.
+    void no_leak_memory(void) {
+        int * const temporary = (int*)malloc(sizeof(int));
+        free(temporary);
+    }
+
+    // add test cases in testing file
+    // allocate_module_test.c
+
+    extern void leak_memory(void);
+    extern void no_leak_memory(void);
+
+    static void leak_memory_test(void **state) {
+        leak_memory();
+    }
+    static void no_leak_memory_test(void **state) {
+        no_leak_memory();
+    }
+
+    int main(void) {
+        const struct CMUnitTest tests[] = {
+            cmocka_unit_test(leak_memory_test),
+            cmocka_unit_test(no_leak_memory_test),
+        };
+        return cmocka_run_group_tests(tests, NULL, NULL);
+    }
+
+    # compile the code and generate executable file (the testcase exe)
+    > gcc -o allocate_module_test allocate_module_test.c allocate_module.c -lcmocka -DUNIT_TESTING=1
+
+    # run the test cases
+    > allocate_module_test.exe
+    [==========] tests: Running 2 test(s).
+    [ RUN      ] leak_memory_test
+    [  ERROR   ] --- Blocks allocated...
+    allocate_module.c:42: note: block 000001ECB2D637B0 allocated here
+    ERROR: leak_memory_test leaked 1 block(s)      <---------- report a mem leak
+
+    [  FAILED  ] leak_memory_test
+    [ RUN      ] no_leak_memory_test
+    [       OK ] no_leak_memory_test
+    [==========] tests: 2 test(s) run.
+    [  PASSED  ] 1 test(s).
+    [  FAILED  ] tests: 1 test(s), listed below:
+    [  FAILED  ] leak_memory_test
+
+    1 FAILED TEST(S)
+
+It runs two cases and reports one issue of mem leak.
 
 [cmocka-1.1.7 examples]: https://git.cryptomilk.org/projects/cmocka.git/tree/example?h=cmocka-1.1.7
